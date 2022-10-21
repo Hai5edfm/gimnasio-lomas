@@ -1,3 +1,30 @@
 .membership-container {
     background: linear-gradient(320deg, #E26A2C -2.38%, #FFD07F 14.9%, #FFFFFF 59.45%);
 }
+
+body {
+    background: #eee;
+    height: 100vh;
+    display: flex;
+    overflow: hidden;
+}
+
+.spinner {
+    border: 4px solid rgba(122, 113, 102, 0.1);
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    border-left-color: rgb(243, 131, 11);
+
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+

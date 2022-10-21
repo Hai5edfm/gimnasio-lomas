@@ -3,6 +3,7 @@ import { useSearchParams } from 'react-router-dom'
 import Auth from '../../layouts/Auth';
 import debit_card from "../../assets/images/debit-card.svg"
 import { useForm } from 'react-hook-form';
+import success_icon from "../../assets/images/sucess-icon.svg";
   
 const Payment = () => {
   const methods = useForm();
@@ -26,14 +27,17 @@ const Payment = () => {
     .then(data => console.log(data))
     .catch(err => console.error(err))
   }, [])
-  const handlePayment = setTimeout(() => {
-    
-  }, 3000)
+  
+  const handlePayment = () => {
+    setTimeout(() => {
+      setPaymentStep('success')
+    }, 1500)
+  }
 
   if(paymentStep == 'payment') {
     return (
     <Auth>
-      <div className='flex justify-center items-center gap-60 h-full membership-container'>
+      <div className='flex justify-center items-center gap-60 w-screen h-full membership-container'>
         <div>
           <h2 className='mb-10 font-bold text-4xl'>Activá tu membresía </h2>
           <p className='mb-2'>Membresía Elegida</p>
@@ -90,19 +94,36 @@ const Payment = () => {
           </form>
           <div className='flex gap-20 mt-10'>
             <a href="/" className='py-3 px-20 bg-white rounded-lg text-[#D04801] border border-[#D04801]'> Volver atrás </a>
-            <button className='py-3 px-20 bg-[#E04D01]/50 rounded-lg text-white' onClick={() => setPaymentStep('processing')}> Finalizá pago </button>
+            <button className='py-3 px-20 bg-[#E04D01]/50 rounded-lg text-white' onClick={() => {setPaymentStep('processing'); handlePayment()}}> Finalizá pago </button>
           </div>
         </div>
       </div>
     </Auth>
     );
-  } else if (paymentStep == 'processing') {
+  } else if (paymentStep == "processing") {
     return (
     <Auth>
-      <div className='flex justify-center items-center gap-60 h-full membership-container'>
-        <p>Estamos procesando tu pago, esto puede demorar unos minutos...</p>
+      <div className='flex flex-col justify-center gap-10 items-center w-screen h-full membership-container text-lg'>
+        <div className="spinner"></div>
+        <p className='font-bold'>Estamos procesando tu pago, esto puede demorar unos minutos...</p>
       </div>
     </Auth>
+    )
+  } else if (paymentStep == "success") {
+    return (
+      <Auth>
+        <div className='flex justify-center items-center gap-60 w-screen h-full membership-container'>
+          <div className='border-2 boder-[#2A2550] rounded-xl bg-white text-center flex flex-col items-center max-w-[491px] max-h-[488px] p-20'>
+            <img src={success_icon} className="max-w-[80px]" />
+            <h2 className='mt-8 mb-2 font-bold text-xl'>¡Pago realizado con exito!</h2>
+            <p className="font-regular">Revisá tu bandeja de entrada para visualizar el comprobante</p>
+            <div className='flex flex-col gap-5 mt-10'>
+              <a className='py-3 px-20 bg-[#E04D01] rounded-lg text-white text-center' href='/scheduleTurn'> RESERVÁ TUS PASES </a>
+              <a href="/" className='py-3 px-20 bg-white rounded-lg text-[#D04801] border border-[#D04801] text-center'> Volver al inicio </a>
+            </div>
+          </div>
+        </div>
+      </Auth>
     )
   }
 }
